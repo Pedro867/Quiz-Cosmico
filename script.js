@@ -33,7 +33,7 @@ function start (){
 }
 
 btnResposta.onclick = () => {
-    btnResposta.style.display = "none"; 
+    btnResposta.style.display = "none";
     contentResposta.style.display = "flex";
 }
 
