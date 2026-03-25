@@ -1,177 +1,51 @@
-*{
-    font-family: "Montserrat", sans-serif;
+ body {
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+    min-height: 100vh;
 }
 
-body {
-    background-image: url(plano-fundo.jpg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+.card {
+    border-radius: 1rem;
+    transition: transform 0.3s ease;
 }
 
-#Title{
-    margin-top: 3.5vw;
-    text-align: center;
-    font-size: 4vw;
-    color: white;
+.card:hover {
+    transform: translateY(-5px);
 }
 
-main {
-    z-index: 1;
-    width: 100%;
-    max-width: 80vw;
-    min-width: 20vw;
-    border-radius: 0.5vw;
-    border: 0.5vw solid rgb(100,180,245);
-    box-sizing: border-box;
-    margin-top: 5vw;
-    margin-left: 7vw;
-    margin-right: 7vw;
-    margin-bottom: 7vw;
-    background-color: lightskyblue;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 1vw;
-    padding-bottom: 2vw;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.content {
-    display: flex;
-    flex-direction: column;
-    width: 70%;
+.card {
+    animation: fadeIn 0.5s ease-out;
 }
 
-.spnQtd {
-    text-align: center;
-    width: 4vw;
-    margin-left: 57vw;
-    font-size: 2.5vw;
-    color: solid black;
-    border-radius: 10vw;
-    padding: 1vw;
-    background-color: rgb(230, 230, 230);
+.btn-outline-primary {
+    transition: all 0.3s ease;
 }
 
-.answers {
-    display: flex;
-    flex-direction: column;
+.btn-outline-primary:hover {
+    transform: translateX(5px);
 }
 
-.question {
-    text-align: center;
-    margin-bottom: 3vw;
-    margin-top: 1vw;
-    font-size: 3vw;
-}
-
-.start {
-    margin-top: 3vw;
-    flex-direction: column;
-}
-
-.start button {
-    font-size: 2.5vw;
-    width: 20vw;
-    height: 5vw;
-    border-radius: 10vw;
-}
-
-.finish {
-    margin-top: 2vw;
-    font-size: 1.75vw;
-    display: none;
-    text-align: center;
-    flex-direction: column;
-
-}
-
-.finish button{
-    text-align: center;
-    margin-top: 3vw;
-}
-
-.resposta {
-    display: none;
-    text-align: justify;
-    margin-bottom: 3vw;
-    margin-top: 1vw;
-    font-size: 2vw;
-}
-
-.respBtn {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 5vw;
-}
-
-button:hover {
-    background-color: rgba(230, 230, 230, 0.808);
-}
-
-button{
-    font-size: 1.5vw;
-    width: 100%;
-    height: 4vw;
-    margin-bottom: 3vw;
-    text-align: center;
-    border: none;
-    border-radius: 0.5vw;
-    cursor: pointer;
-    gap: 5px;
-    background-color: rgb(230, 230, 230);
-}
-
-@media (max-width: 760px) {
-
-    #Title {
-        margin-top: 5vw;
-        font-size: 7vw;
+@media (max-width: 768px) {
+    .display-3 {
+        font-size: 2rem;
     }
 
-    main {
-        margin-top: 30vw;
-        margin-bottom: 25vw;
-        padding-bottom: 5vw;
-        padding-top: 3vw;
+    .btn-lg {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
     }
 
     .question {
-        font-size: 4vw;
-        padding-bottom: 2vw;
+        font-size: 1.25rem !important;
     }
-
-    .spnQtd {
-        font-size: 3vw;
-        padding: 1.5vw;
-    }
-
-    .finish {
-        font-size: 4vw;
-    }
-
-    .start button {
-        font-size: 3.25vw;
-        width: 33vw;
-        height: 6vw;
-        margin-bottom: 6vw;
-        margin-top: 3vw;
-    }
-
-    button {
-        font-size: 3vw;
-        height: 8vw;
-        margin-bottom: 5vw;
-    }
-
-    button:hover { /*Para não dar efeito no celular (não me agrada)*/
-        background-color: rgb(230, 230, 230);
-    }
-
 }

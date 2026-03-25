@@ -1,127 +1,160 @@
 import questions from "./qs.js";
 
 // Estado do quiz
-let currentQuestion  = 0;
+let currentQuestion = 0;
 let correctQuestions = 0;
 
-// Referências DOM (inicializadas após carregamento)
-let btnResposta, btnRestart, btnStart;
+// Referências DOM
+let content, startScreen, finishScreen, btnResposta, btnRestart, btnStart;
 
-// Inicialização
 document.addEventListener("DOMContentLoaded", () => {
-    btnResposta = document.querySelector(".respBtn");
-    btnRestart  = document.querySelector(".finish button");
-    btnStart    = document.querySelector(".start button");
+    content      = document.querySelector(".content");
+    startScreen  = document.querySelector(".start");
+    finishScreen = document.querySelector(".finish");
+    btnResposta  = document.querySelector(".respBtn");
+    btnRestart   = document.querySelector(".restart-btn");
+    btnStart     = document.querySelector(".start button");
 
     setupEventListeners();
 
-    // Carrega primeira questão
-    loadQuestion();
-    start();
+    showStartScreen();
 });
 
 function setupEventListeners() {
-    btnStart?.addEventListener("click", handleStart);
-    btnResposta?.addEventListener("click", handleShowAnswer);
-    btnRestart?.addEventListener("click", handleRestart);
+    btnStart?.addEventListener("click", startQuiz);
+    btnResposta?.addEventListener("click", toggleAnswers);
+    btnRestart?.addEventListener("click", restartQuiz);
 }
 
-function handleStart() {
-    const contentStart = document.querySelector(".start");
-    const content      = document.querySelector(".content");
+function showStartScreen() {
+    content?.classList.add("d-none");
+    startScreen?.classList.remove("d-none");
+    finishScreen?.classList.add("d-none");
+}
 
-    content?.style.setProperty("display", "flex");
-    contentStart?.style.setProperty("display", "none");
-
+function startQuiz() {
     resetGame();
+    showQuizScreen();
     loadQuestion();
 }
 
-function handleShowAnswer() {
-    const contentResposta = document.querySelector(".resposta");
-    btnResposta?.style.setProperty("display", "none");
-    contentResposta?.style.setProperty("display", "flex");
+function showQuizScreen() {
+    content?.classList.remove("d-none");
+    startScreen?.classList.add("d-none");
+    finishScreen?.classList.add("d-none");
 }
 
-function handleRestart() {
-    const contentResposta = document.querySelector(".resposta");
-    const contentFinish   = document.querySelector(".finish");
-    const content         = document.querySelector(".content");
+function showFinishScreen() {
+    content?.classList.add("d-none");
+    startScreen?.classList.add("d-none");
+    finishScreen?.classList.remove("d-none");
 
-    content?.style.setProperty("display", "flex");
-    contentFinish?.style.setProperty("display", "none");
-    contentResposta?.style.setProperty("display", "none");
-    btnResposta?.style.setProperty("display", "none");
+    const scoreSpan = document.querySelector(".finish-score span");
+    if (scoreSpan) {
+        scoreSpan.textContent = `${correctQuestions}/${questions.length}`;
+    }
+}
+
+function toggleAnswers() {
+    const respostaDiv = document.querySelector(".resposta");
+    const answersList = document.querySelector(".answers-list");
+
+    if (respostaDiv && answersList) {
+        if (respostaDiv.style.display === "none" || !respostaDiv.style.display) {
+            // Preenche as respostas
+            answersList.innerHTML = questions.map((q, index) => `
+                <div class="mb-2">
+                    <strong class="text-info">Questão ${index + 1}:</strong>
+                    <span class="text-light">${getCorrectAnswer(q)}</span>
+                </div>
+            `).join("");
+
+            respostaDiv.style.display = "block";
+            btnResposta.innerHTML = '<i class="bi bi-eye-slash"></i> Ocultar Respostas';
+        } else {
+            respostaDiv.style.display = "none";
+            btnResposta.innerHTML = '<i class="bi bi-eye"></i> Ver Respostas';
+        }
+    }
+}
+
+function getCorrectAnswer(question) {
+    const correct = question.answers.find(answer => answer.correct === true);
+    return correct ? correct.option : "Resposta não encontrada";
+}
+
+function restartQuiz() {
+    const respostaDiv = document.querySelector(".resposta");
+    if (respostaDiv) respostaDiv.style.display = "none";
 
     resetGame();
+    showQuizScreen();
     loadQuestion();
+
+    if (btnResposta) {
+        btnResposta.innerHTML = '<i class="bi bi-eye"></i> Ver Respostas';
+    }
 }
 
 function resetGame() {
-    currentQuestion  = 0;
+    currentQuestion = 0;
     correctQuestions = 0;
 }
 
-function start (){
-    const contentStart = document.querySelector(".start");
-    const content      = document.querySelector(".content");
-    content.style.display      = "none";
-    contentStart.style.display = "flex";
-}
-
 function finish() {
-    const contentFinish = document.querySelector(".finish");
-    const textFinish    = document.querySelector(".finish span");
-    const content       = document.querySelector(".content");
-    if (textFinish) {
-        textFinish.textContent = `Você acertou ${correctQuestions} de ${questions.length}`;
-    }
-    content?.style.setProperty("display", "none");
-    contentFinish?.style.setProperty("display", "flex");
-    btnResposta?.style.setProperty("display", "flex");
+    showFinishScreen();
 }
 
 function nextQuestion(e) {
-    const button = e.currentTarget; // Usa currentTarget em vez de target
+    const button = e.currentTarget;
+
     if (button?.dataset.correct === "true") {
         correctQuestions++;
-    }
-    if (currentQuestion < questions.length - 1) {
-        currentQuestion++;
-        loadQuestion();
+        // Feedback visual de acerto
+        button.classList.add("btn-success");
+        setTimeout(() => button.classList.remove("btn-success"), 500);
     } else {
-        finish();
+        // Feedback visual de erro
+        button.classList.add("btn-danger");
+        setTimeout(() => button.classList.remove("btn-danger"), 500);
     }
+
+    // Aguarda um pouco para mostrar o feedback antes de avançar
+    setTimeout(() => {
+        if (currentQuestion < questions.length - 1) {
+            currentQuestion++;
+            loadQuestion();
+        } else {
+            finish();
+        }
+    }, 300);
 }
 
 function loadQuestion() {
     const currentQuestionItem = questions[currentQuestion];
-    const questionContainer   = document.querySelector(".question");
-    const answerContainer     = document.querySelector(".answer");
-    const spnQtd              = document.querySelector(".spnQtd");
+    const questionContainer = document.querySelector(".question");
+    const answerContainer = document.querySelector(".answer");
+    const spnQtd = document.querySelector(".spnQtd");
 
     if (!questionContainer || !answerContainer || !spnQtd) return;
 
-    spnQtd.textContent            = `${currentQuestion + 1}/${questions.length}`;
-    answerContainer.innerHTML     = "";
+    spnQtd.innerHTML = `<i class="bi bi-question-circle"></i> ${currentQuestion + 1}/${questions.length}`;
+
+    answerContainer.innerHTML = "";
     questionContainer.textContent = currentQuestionItem.question;
 
-    // Cria os botões de resposta
-    currentQuestionItem.answers.forEach((answer) => {
+    currentQuestionItem.answers.forEach((answer, index) => {
         const button = document.createElement("button");
-        button.classList.add("answer-option"); // Evita conflito de classe
+        button.classList.add("btn", "btn-outline-primary", "btn-lg", "text-start", "p-3");
         button.textContent = answer.option;
         button.dataset.correct = answer.correct;
         button.addEventListener("click", nextQuestion);
 
+        // Adiciona ícone
+        const icon = document.createElement("i");
+        icon.className = "bi bi-circle me-2";
+        button.prepend(icon);
+
         answerContainer.appendChild(button);
     });
-}
-
-function start() {
-    const contentStart = document.querySelector(".start");
-    const content      = document.querySelector(".content");
-
-    content?.style.setProperty("display", "none");
-    contentStart?.style.setProperty("display", "flex");
 }
