@@ -49,3 +49,94 @@
         font-size: 1.25rem !important;
     }
 }
+
+/* Animação para resposta correta */
+@keyframes correctAnswer {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+    }
+    25% {
+        transform: scale(1.05);
+        background-color: #28a745;
+        border-color: #28a745;
+        color: white;
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(40, 167, 69, 0.3);
+        background-color: #28a745;
+        border-color: #28a745;
+        color: white;
+    }
+    75% {
+        transform: scale(1.02);
+        box-shadow: 0 0 0 5px rgba(40, 167, 69, 0.5);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
+}
+
+/* Animação para resposta errada */
+@keyframes wrongAnswer {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-10px);
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: white;
+    }
+    75% {
+        transform: translateX(10px);
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: white;
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        right: -30px;
+        opacity: 0;
+    }
+    to {
+        right: 20px;
+        opacity: 1;
+    }
+}
+
+/* Classe para animação de acerto */
+.answer-correct {
+    animation: correctAnswer 0.6s ease-out !important;
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    color: white !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efeito de confete para acerto */
+.answer-correct::after {
+    content: "🎉";
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Classe para animação de erro */
+.answer-wrong {
+    animation: wrongAnswer 0.4s ease-out !important;
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    color: white !important;
+}

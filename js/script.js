@@ -150,12 +150,12 @@ function nextQuestion(e) {
     if (button?.dataset.correct === "true") {
         correctQuestions++;
         // Feedback visual de acerto
-        button.classList.add("btn-success");
-        setTimeout(() => button.classList.remove("btn-success"), 500);
+        button.classList.add("answer-correct");
+        setTimeout(() => button.classList.remove("answer-correct"), 1000);
     } else {
         // Feedback visual de erro
-        button.classList.add("btn-danger");
-        setTimeout(() => button.classList.remove("btn-danger"), 500);
+        button.classList.add("answer-wrong");
+        setTimeout(() => button.classList.remove("answer-wrong"), 1000);
     }
 
     // Aguarda um pouco para mostrar o feedback antes de avançar
@@ -166,7 +166,7 @@ function nextQuestion(e) {
         } else {
             finish();
         }
-    }, 300);
+    }, 1000);
 }
 
 function loadQuestion() {
