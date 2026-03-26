@@ -5,15 +5,15 @@ let currentQuestion = 0;
 let correctQuestions = 0;
 
 // Referências DOM
-let content, startScreen, finishScreen, btnResposta, btnRestart, btnStart;
+let contentElem, startElem, finishElem, btnResposta, btnRestart, btnStart;
 
 document.addEventListener("DOMContentLoaded", () => {
-    content      = document.querySelector(".content");
-    startScreen  = document.querySelector(".start");
-    finishScreen = document.querySelector(".finish");
-    btnResposta  = document.getElementById("respBtn");
-    btnRestart   = document.getElementById("restart-btn");
-    btnStart     = document.getElementById("start-btn");
+    contentElem = document.querySelector(".content");
+    startElem   = document.querySelector(".start");
+    finishElem  = document.querySelector(".finish");
+    btnResposta = document.getElementById("respBtn");
+    btnRestart  = document.getElementById("restart-btn");
+    btnStart    = document.getElementById("start-btn");
 
     setupEventListeners();
 
@@ -33,10 +33,6 @@ function startQuiz() {
 }
 
 function showStartScreen() {
-    const contentElem = document.querySelector(".content");
-    const startElem = document.querySelector(".start");
-    const finishElem = document.querySelector(".finish");
-
     if (contentElem) {
         contentElem.classList.add("d-none");
         contentElem.style.display = "none";
