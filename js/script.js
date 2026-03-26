@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
     content      = document.querySelector(".content");
     startScreen  = document.querySelector(".start");
     finishScreen = document.querySelector(".finish");
-    btnResposta  = document.querySelector(".respBtn");
-    btnRestart   = document.querySelector(".restart-btn");
-    btnStart     = document.querySelector(".start button");
+    btnResposta  = document.getElementById("respBtn");
+    btnRestart   = document.getElementById("restart-btn");
+    btnStart     = document.getElementById("start-btn");
 
     setupEventListeners();
 
@@ -26,28 +26,67 @@ function setupEventListeners() {
     btnRestart?.addEventListener("click", restartQuiz);
 }
 
-function showStartScreen() {
-    content?.classList.add("d-none");
-    startScreen?.classList.remove("d-none");
-    finishScreen?.classList.add("d-none");
-}
-
 function startQuiz() {
     resetGame();
     showQuizScreen();
     loadQuestion();
 }
 
+function showStartScreen() {
+    const contentElem = document.querySelector(".content");
+    const startElem = document.querySelector(".start");
+    const finishElem = document.querySelector(".finish");
+
+    if (contentElem) {
+        contentElem.classList.add("d-none");
+        contentElem.style.display = "none";
+    }
+    if (startElem) {
+        startElem.classList.remove("d-none");
+        startElem.style.display = "block";
+    }
+    if (finishElem) {
+        finishElem.classList.add("d-none");
+        finishElem.style.display = "none";
+    }
+}
+
 function showQuizScreen() {
-    content?.classList.remove("d-none");
-    startScreen?.classList.add("d-none");
-    finishScreen?.classList.add("d-none");
+    const contentElem = document.querySelector(".content");
+    const startElem = document.querySelector(".start");
+    const finishElem = document.querySelector(".finish");
+
+    if (contentElem) {
+        contentElem.classList.remove("d-none");
+        contentElem.style.display = "block";
+    }
+    if (startElem) {
+        startElem.classList.add("d-none");
+        startElem.style.display = "none";
+    }
+    if (finishElem) {
+        finishElem.classList.add("d-none");
+        finishElem.style.display = "none";
+    }
 }
 
 function showFinishScreen() {
-    content?.classList.add("d-none");
-    startScreen?.classList.add("d-none");
-    finishScreen?.classList.remove("d-none");
+    const contentElem = document.querySelector(".content");
+    const startElem = document.querySelector(".start");
+    const finishElem = document.querySelector(".finish");
+
+    if (contentElem) {
+        contentElem.classList.add("d-none");
+        contentElem.style.display = "none";
+    }
+    if (startElem) {
+        startElem.classList.add("d-none");
+        startElem.style.display = "none";
+    }
+    if (finishElem) {
+        finishElem.classList.remove("d-none");
+        finishElem.style.display = "block";
+    }
 
     const scoreSpan = document.querySelector(".finish-score span");
     if (scoreSpan) {
