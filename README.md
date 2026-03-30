@@ -10,4 +10,5 @@
 <img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/be3dc0e9-55d4-43b9-86c0-0f4699d7d155" />
 
 ### Tela final: <br>
-<img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/cecbb491-6608-48ea-bdcb-f7aeefd338ac" />
+<img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/06b39398-b2a1-4834-91a1-1e15a1eed1d7" />
+
