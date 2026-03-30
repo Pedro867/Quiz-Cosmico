@@ -5,13 +5,12 @@ let currentQuestion = 0;
 let correctQuestions = 0;
 
 // Referências DOM
-let contentElem, startElem, finishElem, btnResposta, btnRestart, btnStart;
+let contentElem, startElem, finishElem, btnRestart, btnStart;
 
 document.addEventListener("DOMContentLoaded", () => {
     contentElem = document.querySelector(".content");
     startElem   = document.querySelector(".start");
     finishElem  = document.querySelector(".finish");
-    btnResposta = document.getElementById("respBtn");
     btnRestart  = document.getElementById("restart-btn");
     btnStart    = document.getElementById("start-btn");
 
@@ -22,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function setupEventListeners() {
     btnStart?.addEventListener("click", startQuiz);
-    btnResposta?.addEventListener("click", toggleAnswers);
     btnRestart?.addEventListener("click", restartQuiz);
 }
 
@@ -105,10 +103,8 @@ function toggleAnswers() {
             `).join("");
 
             respostaDiv.style.display = "block";
-            btnResposta.innerHTML = '<i class="bi bi-eye-slash"></i> Ocultar Respostas';
         } else {
             respostaDiv.style.display = "none";
-            btnResposta.innerHTML = '<i class="bi bi-eye"></i> Ver Respostas';
         }
     }
 }
@@ -125,10 +121,6 @@ function restartQuiz() {
     resetGame();
     showQuizScreen();
     loadQuestion();
-
-    if (btnResposta) {
-        btnResposta.innerHTML = '<i class="bi bi-eye"></i> Ver Respostas';
-    }
 }
 
 function resetGame() {
@@ -141,20 +133,29 @@ function finish() {
 }
 
 function nextQuestion(e) {
-    const button = e.currentTarget;
+    const button     = e.currentTarget;
+    const allButtons = document.querySelectorAll(".answer button");
+    const isCorrect  = button?.dataset.correct === "true";
 
-    if (button?.dataset.correct === "true") {
+    // Desabilita todos os botões para evitar múltiplos cliques
+    allButtons.forEach(btn => {
+        btn.style.pointerEvents = "none";
+        // Encontra e destaca a resposta correta em verde
+        if (btn.dataset.correct === "true") {
+            btn.classList.add("answer-highlight-correct");
+        }
+    });
+
+    if (isCorrect) {
         correctQuestions++;
         // Feedback visual de acerto
         button.classList.add("answer-correct");
-        setTimeout(() => button.classList.remove("answer-correct"), 1000);
     } else {
         // Feedback visual de erro
         button.classList.add("answer-wrong");
-        setTimeout(() => button.classList.remove("answer-wrong"), 1000);
     }
 
-    // Aguarda um pouco para mostrar o feedback antes de avançar
+    // Aguarda o feedback visual antes de avançar
     setTimeout(() => {
         if (currentQuestion < questions.length - 1) {
             currentQuestion++;
@@ -162,7 +163,7 @@ function nextQuestion(e) {
         } else {
             finish();
         }
-    }, 1000);
+    }, 1500);
 }
 
 function loadQuestion() {

@@ -1,6 +1,6 @@
 const questions = [
     {
-        question: "Qual o nome da galáxia que contém o Sistema Solar?",
+        question: "Qual o nome da Galáxia que contém o Sistema Solar?",
         answers: [
             { option: "Andrômeda", correct: false},
             { option: "Via Láctea", correct: true},
@@ -27,7 +27,7 @@ const questions = [
         ],
     },
     {
-        question: "Qual o planeta mais Próximo do Sol?",
+        question: "Qual o Planeta mais Próximo do Sol?",
         answers: [
             { option: "Marte", correct: false},
             { option: "Mercúrio", correct: true},
